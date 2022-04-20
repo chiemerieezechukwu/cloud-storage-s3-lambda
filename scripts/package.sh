@@ -26,7 +26,7 @@ fi
 if [[ -f "$FILE" ]]; then
   echo "Installing dependencies..."
   echo "From: requirement.txt file exists..."
-  $pip install -r "$FILE" -t .
+  $pip install -r "$FILE" -t . --no-compile
 else
   echo "Error: requirement.txt does not exist!"
 fi
