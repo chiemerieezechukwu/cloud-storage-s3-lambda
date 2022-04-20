@@ -15,10 +15,18 @@ cp -r $WORK_DIR/src/* .
 
 FILE=requirements.txt
 
+if [[ -z "$RUNTIME" ]]; then
+  echo "RUNTIME variable not set, defaulting to $(python --version)"
+  pip=pip
+else
+  echo "RUNTIME set to '$RUNTIME'"
+  pip="$RUNTIME -m pip"
+fi
+
 if [[ -f "$FILE" ]]; then
   echo "Installing dependencies..."
   echo "From: requirement.txt file exists..."
-  pip install -r "$FILE" -t .
+  $pip install -r "$FILE" -t .
 else
   echo "Error: requirement.txt does not exist!"
 fi
@@ -26,7 +34,7 @@ fi
 echo "Removing unnecessary files for deterministic builds..."
 find . -type d -name '__pycache__' -exec rm -rf {} +
 
-if [[ ! $actor == "terraform" ]]; then
+if [[ ! $ACTOR == "terraform" ]]; then
   echo "Actor is not terraform! so zipping package"
 
   zip -r $WORK_DIR/lambda_deployment_package.zip .
