@@ -1,0 +1,6 @@
+venv
+*.zip
+*.tar.gz
+dist
+.DS_Store
+*_event.json

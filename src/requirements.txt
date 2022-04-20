@@ -1,0 +1,2 @@
+aws-lambda-powertools==1.25.7
+lambda-router @ git+https://github.com/chiemerieezechukwu/lambda_router@master
