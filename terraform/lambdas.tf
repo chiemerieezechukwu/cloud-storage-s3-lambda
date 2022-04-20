@@ -1,20 +1,22 @@
-# determine if the code has changed to run the null_resource
-data "archive_file" "src_zip" {
-  source_dir  = local.source_code_dir
-  output_path = local.source_code_zip
-  type        = "zip"
-}
+# # determine if the code has changed to run the null_resource
+# data "archive_file" "src_zip" {
+#   source_dir  = local.source_code_dir
+#   output_path = local.source_code_zip
+#   type        = "zip"
+# }
 
 resource "null_resource" "install_python_dependencies" {
   triggers = {
-    src_hash = data.archive_file.src_zip.output_base64sha256
+    timestamp = timestamp()
+    # src_hash = data.archive_file.src_zip.output_base64sha256
   }
 
   provisioner "local-exec" {
     command = "cd ${local.code_base_root} && bash ${local.code_base_root}/scripts/package.sh"
 
     environment = {
-      actor = "terraform"
+      ACTOR   = "terraform"
+      RUNTIME = var.runtime
     }
   }
 }
