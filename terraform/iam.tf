@@ -52,7 +52,8 @@ resource "aws_iam_policy" "lambda_s3_policy" {
       ]
       Effect = "Allow"
       Resource = [
-        "${aws_s3_bucket.object_storage_bucket.arn}"
+        "arn:aws:s3:::${aws_s3_bucket.object_storage_bucket.id}/*",
+        "arn:aws:s3:::${aws_s3_bucket.object_storage_bucket.id}"
       ]
     }]
   })
