@@ -27,6 +27,10 @@ if [[ -f "$FILE" ]]; then
   echo "Installing dependencies..."
   echo "From: requirement.txt file exists..."
   $pip install -r "$FILE" -t . --no-compile
+
+  echo "Removing libraries already on AWS lambda by default..."
+  rm -rf ./boto3*
+  rm -rf ./botocore*
 else
   echo "Error: requirement.txt does not exist!"
 fi
